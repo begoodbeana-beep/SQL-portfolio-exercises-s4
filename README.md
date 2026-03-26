@@ -1,12 +1,12 @@
 # DATABASE CREATION
 
-## 1. Objective
+## Objective
 This project creates a simplified data warehouse for analyzing users, credit cards, companies, products, and financial transactions.  
 The goal is to perform analytical queries using a star schema structure.
 
-## 2. Table Structure
+## Level 1
 
-### 2.1 Dimension Tables
+### 1 Dimension Tables
 
 **dim_users – Users**  
 Contains user information.
@@ -59,7 +59,7 @@ Contains information about products sold in transactions.
 - weight (DECIMAL)  
 - warehouse_id (VARCHAR)  
 
-### 2.2 Fact Table
+### 2 Fact Table
 
 **fact_transactions**  
 Stores transaction records linking users, cards, and companies.
@@ -73,7 +73,7 @@ Stores transaction records linking users, cards, and companies.
 - declined (BOOLEAN)  
 - user_id (FK to dim_users)  
 
-### 2.3 Bridge Table
+### 3 Bridge Table
 
 **transaction_products**  
 Represents many-to-many relationship between transactions and products.
@@ -83,7 +83,7 @@ Represents many-to-many relationship between transactions and products.
 - product_id (FK to dim_products)  
 - Composite PK: (transaction_id, product_id)  
 
-## 3. Foreign Keys for Star Schema - Diagram created and saved in `diagrama4estrelas.png`
+## 4 Foreign Keys for Star Schema - Diagram created and saved in `diagrama4estrelas.png`
 
 - fact_transactions.user_id → dim_users.user_id  
 - fact_transactions.card_id → dim_credit_cards.card_id  
@@ -93,7 +93,7 @@ Represents many-to-many relationship between transactions and products.
 
 With these relationships, the star schema is created: **fact_transactions** at the center, four dimension tables around it, and **transaction_products** linking transactions to products.
 
-## 4. Exercises Performed
+## Exercises Performed
 
 **Exercise 1 – Users with More Than 80 Transactions**  
 Queries created and saved in `sprint4n1e1.sql`
