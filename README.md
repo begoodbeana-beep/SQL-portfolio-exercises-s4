@@ -126,3 +126,56 @@ LIMIT 10;
 ```
 Objective: Identify the top 10 users by total amount spent.
 Result: List of users with the highest total transaction value.
+
+## LEVEL 2
+
+Create a table that reflects the status of credit cards based on the last three transactions:  
+- If the last three transactions were all declined → card is **Inactive**  
+- If at least one of the last three transactions was approved → card is **Active**  
+
+**Table Creation - Exercise 1 – Count Active Cards**
+Queries created and saved in `sprint4n2e1.sql`
+
+```sql
+CREATE TEMPORARY TABLE card_status AS
+SELECT
+    c.card_id,
+    CASE
+        WHEN MIN(f.declined) = 1 AND COUNT(f.transaction_id) >= 3 THEN 'Inactive'
+        ELSE 'Active'
+    END AS status
+FROM dim_credit_cards c
+LEFT JOIN fact_transactions f
+    ON c.card_id = f.card_id
+GROUP BY c.card_id;
+
+SELECT COUNT(*) AS active_cards
+FROM card_status
+WHERE status = 'Active';
+```
+Result: 5000 active cards
+
+## LEVEL 3
+Create a table that allows us to connect products.csv data with the existing database, using product_ids from transactions. Then, determine how many times each product was sold.
+
+**Exercise 1 – Count Product Sales**
+Queries created and saved in `sprint4n3e1.sql` and diagram in `diagramanewproducts`
+
+* Tables Used
+- dim_products – contains all product information
+- transaction_products – bridge table linking transactions to products
+
+```sql
+SELECT
+    p.product_id,
+    p.product_name,
+    COUNT(tp.transaction_id) AS times_sold
+FROM dim_products p
+LEFT JOIN transaction_products tp
+    ON p.product_id = tp.product_id
+GROUP BY p.product_id, p.product_name
+ORDER BY times_sold DESC;
+```
+Result: Table showing each product and the number of times it was sold
+
+
