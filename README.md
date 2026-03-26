@@ -83,7 +83,7 @@ Represents many-to-many relationship between transactions and products.
 - product_id (FK to dim_products)  
 - Composite PK: (transaction_id, product_id)  
 
-## 4 Foreign Keys for Star Schema - Diagram created and saved in `diagrama4estrelas.png`
+### 4 Foreign Keys for Star Schema - Diagram created and saved in `diagrama4estrelas.png`
 
 - fact_transactions.user_id → dim_users.user_id  
 - fact_transactions.card_id → dim_credit_cards.card_id  
